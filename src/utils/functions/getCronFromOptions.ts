@@ -24,8 +24,7 @@ const getAscRangesString = (arr: any[]) => {
 const getNthRangesString = (slicedArr: number[], arr: number[]) => {
   const min = slicedArr[0];
   const max = slicedArr[slicedArr.length - 1];
-  console.log(slicedArr);
-  console.log(arr);
+
   if (!(min < max)) return;
 
   const minIndex = arr.indexOf(min);
@@ -33,7 +32,6 @@ const getNthRangesString = (slicedArr: number[], arr: number[]) => {
   let nth = 0;
   for (let i = 0; i < slicedArr.length; i++) {
     const res = arr.indexOf(slicedArr[i]);
-    console.log(res);
     if (nth === 0) nth = res;
     else if (res % nth != 0 || nth === 1) return;
   }
