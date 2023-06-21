@@ -1,48 +1,38 @@
-import React from "react";
 import Select from "react-select";
-
-export interface IOption {
-  value: number;
-  label: string;
-}
+import { IOption } from "../../../types";
+import "./custom-select.css";
 interface IData {
   colCount: number;
   options: IOption[];
   prefix: string;
   name: string;
-  isMulti?: boolean;
-  closeMenuOnSelect?: boolean;
-  defaultValue?: IOption;
   key?: string;
+  placeholder?: string;
 }
 type Props = {
   data: IData;
   isDisabled?: boolean;
-  onChange?: any;
-  value: any;
-  setValue: any;
+  value: IOption | IOption[];
+  onChange: any;
+  isMulti?: boolean;
+  closeMenuOnSelect?: boolean;
 };
 
-const CustomSelect = ({ data, isDisabled = false, value, setValue }: Props) => {
-  const {
-    colCount,
-    options,
-    prefix,
-    name,
-    isMulti = true,
-    closeMenuOnSelect = false,
-    defaultValue,
-  } = data;
-  const handleChange = (option: IOption) => {
-    setValue(option.value);
-  };
+const CustomSelect = ({
+  data,
+  isDisabled = false,
+  value,
+  onChange,
+  isMulti = true,
+  closeMenuOnSelect,
+}: Props) => {
+  const { colCount, options, prefix, name, placeholder } = data;
   return (
     <div className={`select__wrapper --col-count-${colCount}`}>
       <span>{prefix}</span>
       <Select
         value={value}
-        //defaultValue={defaultValue}
-        onChange={handleChange}
+        onChange={onChange}
         isDisabled={isDisabled}
         isMulti={isMulti}
         name={name}
@@ -52,7 +42,7 @@ const CustomSelect = ({ data, isDisabled = false, value, setValue }: Props) => {
         classNamePrefix="select"
         hideSelectedOptions={false}
         closeMenuOnSelect={closeMenuOnSelect}
-        placeholder={`every ${name}`}
+        placeholder={placeholder}
       />
     </div>
   );

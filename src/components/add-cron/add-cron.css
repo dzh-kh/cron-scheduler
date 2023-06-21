@@ -1,0 +1,11 @@
+.add-cron__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.add-cron__btn-group {
+  display: flex;
+  gap: 3px;
+}

@@ -1,0 +1,11 @@
+.button-ui {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 7px;
+  font-size: 1em;
+  background: #6495ed;
+  color: #ffff;
+}
+
+.button-ui:hover {
+}

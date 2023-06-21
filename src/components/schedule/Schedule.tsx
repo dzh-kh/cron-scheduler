@@ -1,47 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import CustomSelect from "../ui/custom-select/CustomSelect";
-import { MONTHS, DAYS, MINS, WEEKS, HOURS } from "../../consts";
-type Props = {};
+import { selectData, format } from "./data";
+import { ISelectOptions, IOption, IOptions } from "../../types";
+import "./schedule.css";
 
-const Schedule = (props: Props) => {
-  const [everyFormat, setEveryFormat] = useState(-1);
-  const [min, setMin] = useState([]);
-  const [hour, setHour] = useState([]);
-  const [day, setDay] = useState([]);
-  const [month, setMonth] = useState([]);
-  const [weekDay, setWeekDay] = useState([]);
+type Props = {
+  options: ISelectOptions;
+  setOptions: Dispatch<SetStateAction<ISelectOptions>>;
+};
 
-  const setObj: any = {
-    minute: [min, setMin],
-    hour: [hour, setHour],
-    day: [day, setDay],
-    week: [weekDay, setWeekDay],
-    month: [month, setMonth],
-  };
+const Schedule = ({ options, setOptions }: Props) => {
+  const [everyFormat, setEveryFormat] = useState<IOption>(format.defaultValue);
+  useEffect(() => {
+    const optionKeys = Object.keys(options);
+    for (let i = 0; i < optionKeys.length; i++) {
+      if (everyFormat.value >= i) {
+        setOptions((prev) => ({ ...prev, [optionKeys[i]]: [] }));
+      }
+    }
+  }, [everyFormat]);
 
   const items = selectData.map((data, index) => {
-    const idDisabled = everyFormat >= index;
-    console.log(data.name);
-    const [value, setValue] = setObj[data.name];
+    const idDisabled = everyFormat.value >= index;
+    const onChange = (value: IOption[]) => {
+      setOptions((prevState) => ({
+        ...prevState,
+        [data.name]: value,
+      }));
+    };
     return (
       <CustomSelect
-        value={value}
-        setValue={setValue}
+        value={options[data.name as keyof ISelectOptions]}
+        onChange={onChange}
         isDisabled={idDisabled}
         key={data.key}
+        closeMenuOnSelect={false}
         data={data}
       />
     );
   });
+
+  const handleFormatChange = (value: IOption) => {
+    setEveryFormat(value);
+  };
+
   return (
     <div className="schedule schedule__wrapper">
       <div>
         {
           <CustomSelect
-            //value={everyFormat}
-            setValue={setEveryFormat}
-            data={every}
-            defaultValue={every.defaultValue}
+            onChange={handleFormatChange}
+            value={everyFormat}
+            data={format}
+            isMulti={false}
+            closeMenuOnSelect={true}
           />
         }
       </div>
@@ -51,80 +63,3 @@ const Schedule = (props: Props) => {
 };
 
 export default Schedule;
-
-const selectOptionsData = {
-  minute: MINS.map((item) => ({
-    value: item,
-    label: `${item}`,
-  })),
-  hour: HOURS.map((item) => ({
-    value: item,
-    label: `${item}`,
-  })),
-  day: DAYS.map((item) => ({
-    value: item,
-    label: `${item}`,
-  })),
-  week: Object.keys(WEEKS).map((item, index) => {
-    return { value: index, label: item };
-  }),
-  month: Object.keys(MONTHS).map((item, index) => {
-    return { value: index + 1, label: item };
-  }),
-  every: [
-    { value: -1, label: "year" },
-    { value: 0, label: "month" },
-    { value: 1, label: "week" },
-    { value: 2, label: "day" },
-    { value: 3, label: "hour" },
-    { value: 4, label: "minute" },
-  ],
-};
-
-const selectData = [
-  {
-    key: "5",
-    prefix: "in",
-    name: "month",
-    options: selectOptionsData.month,
-    colCount: 1,
-  },
-  {
-    key: "3",
-    prefix: "on",
-    name: "day",
-    options: selectOptionsData.day,
-    colCount: 4,
-  },
-  {
-    key: "4",
-    prefix: "and",
-    name: "week",
-    options: selectOptionsData.week,
-    colCount: 1,
-  },
-  {
-    key: "2",
-    prefix: "at",
-    name: "hour",
-    options: selectOptionsData.hour,
-    colCount: 4,
-  },
-  {
-    key: "1",
-    prefix: ":",
-    name: "minute",
-    options: selectOptionsData.minute,
-    colCount: 7,
-  },
-];
-
-const every = {
-  prefix: "Every",
-  name: "",
-  options: selectOptionsData.every,
-  colCount: 1,
-  isMulti: false,
-  closeMenuOnSelect: true,
-  defaultValue: selectOptionsData.every[0],
-};

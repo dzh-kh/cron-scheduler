@@ -1,0 +1,27 @@
+.schedule__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  padding: 20px 50px;
+  min-height: 200px;
+  border-radius: 9px;
+  box-shadow: 3px 1px 16px 0px rgba(53, 114, 161, 0.2);
+  justify-content: center;
+  flex-direction: column;
+}
+
+.schedule__input-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+}
+
+@media screen and (max-width: 980px) {
+  .schedule__input-group {
+    flex-direction: column;
+  }
+  .schedule__input-group span {
+    width: 30px;
+  }
+}

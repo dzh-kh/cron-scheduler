@@ -14,7 +14,6 @@ export const DAYS = new Array(DAY_MAX).fill(null).map((el, i) => i + 1);
 export const MINS = new Array(MIN_MAX + 1).fill(null).map((el, i) => i);
 export const HOURS = new Array(HOUR_MAX + 1).fill(null).map((el, i) => i);
 
-// const WEEKS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SUT"];
 export const WEEKS = {
   SUN: "SUNDAY",
   MON: "MONDAY",
@@ -24,23 +23,6 @@ export const WEEKS = {
   FRI: "FRIDAY",
   SUT: "SATURDAY",
 };
-// const WEEKS_WITH_ALTERNATIVES = {
-//   weeks: ["SUN", "SUNDAY"]
-// }
-// const MONTHS = [
-//   "JAN",
-//   "FEB",
-//   "MAR",
-//   "APR",
-//   "MAY",
-//   "JUN",
-//   "JUL",
-//   "AUG",
-//   "SEP",
-//   "OCT",
-//   "NOV",
-//   "DEC",
-// ];
 
 export const MONTHS = {
   JAN: "JANUARY",
