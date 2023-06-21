@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import CustomSelect from "../ui/custom-select/CustomSelect";
 import { selectData, format } from "./data";
-import { ISelectOptions, IOption, IOptions } from "../../types";
+import { ISelectOptions, IOption } from "../../types";
 import "./schedule.css";
 
 type Props = {

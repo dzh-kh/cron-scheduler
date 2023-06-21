@@ -23,7 +23,7 @@ export const getOptionsFromCron = (cron: string) => {
   const options = {} as IOptions;
   const cronArr = cron.split(" ");
 
-  if (cronArr.length !== 5) throw new CronNotValidError("");
+  if (cronArr.length !== 5) throw new CronNotValidError();
 
   const [min, hour, day, month, week] = cronArr;
 
@@ -53,27 +53,27 @@ const getOptFromIntRange = (
     start <= end
   ) {
     return arr.slice(start - validStart, end + 1 - validStart);
-  } else throw new CronNotValidError(range);
+  } else throw new CronNotValidError();
 };
 
 const getOptFromStrRange = (range: string, obj: any) => {
   let [start, end] = range.split("-");
-  start = stringValidator(start, obj);
-  end = stringValidator(end, obj);
+  start = getValidString(start, obj);
+  end = getValidString(end, obj);
   const arr = Object.keys(obj);
   const startIndex = arr.indexOf(start);
   const endIndex = arr.indexOf(end);
   if (startIndex <= endIndex) {
     return arr.slice(startIndex, endIndex);
-  } else throw new CronNotValidError(range);
+  } else throw new CronNotValidError();
 };
 
-const stringValidator = (string: string, obj: any) => {
+const getValidString = (string: string, obj: any) => {
   const stringStart = string.slice(0, 3).toUpperCase();
   const isItemExist = obj[stringStart] === string.toUpperCase() || obj[string];
   if (isItemExist) {
     return stringStart;
-  } else throw new CronNotValidError(string);
+  } else throw new CronNotValidError();
 };
 
 const getNthArrayItem = (arr: any[], nth: number) => {
@@ -136,7 +136,7 @@ const getIntOption = (
   if (singleValue) {
     if (validStart <= +singleValue[0] && +singleValue[0] <= validEnd) {
       return [arr[+singleValue[0] - validStart]];
-    } else throw new CronNotValidError(val);
+    } else throw new CronNotValidError();
   }
 
   if (nthRange) {
@@ -146,7 +146,7 @@ const getIntOption = (
     const nthRangeOptions = getNthArrayItem(arr, +nth);
     return nthRangeOptions;
   } else {
-    throw new CronNotValidError(val);
+    throw new CronNotValidError();
   }
 };
 
@@ -164,7 +164,7 @@ const getStrOption = (val: string, valObj: any) => {
     return rangeOptions;
   }
   if (singleValue) {
-    return [stringValidator(singleValue[0], valObj)];
+    return [getValidString(singleValue[0], valObj)];
   }
 
   if (nthRange) {
@@ -173,6 +173,6 @@ const getStrOption = (val: string, valObj: any) => {
     const nthRangeOptions = getNthArrayItem(valObjKeys, +nth);
     return nthRangeOptions;
   } else {
-    throw new CronNotValidError(val);
+    throw new CronNotValidError();
   }
 };
