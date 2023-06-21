@@ -17,6 +17,7 @@ const AddCron = ({ setOptions, options }: Props) => {
 
   const handleLoadClick = (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     e.preventDefault();
+    setIsCronValide(true);
     try {
       const cronOptions = getOptionsFromCron(cron);
       const min = selectOptionsData.min.filter((i) =>
@@ -42,6 +43,7 @@ const AddCron = ({ setOptions, options }: Props) => {
   };
 
   const handleSaveClick = () => {
+    setIsCronValide(true);
     const values = {} as IOptions;
     for (let [key, value] of Object.entries(options)) {
       values[key as keyof IOptions] = value.map((i: IOption) => i.value);

@@ -1,6 +1,6 @@
 import { IOptions } from "../../types/index";
 
-import { MINS, HOURS, DAYS, WEEKS, MONTHS } from "../../consts";
+import { MONTH_MIN, MINS, HOURS, DAYS, WEEKS, MONTHS } from "../../consts";
 
 const getAscRangesString = (arr: any[]) => {
   let res = [];
@@ -24,7 +24,8 @@ const getAscRangesString = (arr: any[]) => {
 const getNthRangesString = (slicedArr: number[], arr: number[]) => {
   const min = slicedArr[0];
   const max = slicedArr[slicedArr.length - 1];
-
+  console.log(slicedArr);
+  console.log(arr);
   if (!(min < max)) return;
 
   const minIndex = arr.indexOf(min);
@@ -32,10 +33,9 @@ const getNthRangesString = (slicedArr: number[], arr: number[]) => {
   let nth = 0;
   for (let i = 0; i < slicedArr.length; i++) {
     const res = arr.indexOf(slicedArr[i]);
+    console.log(res);
     if (nth === 0) nth = res;
     else if (res % nth != 0 || nth === 1) return;
-
-    console.log(slicedArr[i], res, nth);
   }
   return `${arr[minIndex]}-${arr[maxIndex]}/${nth}`;
 };
@@ -56,7 +56,9 @@ export const getCronFromOptions = (options: IOptions) => {
   const minString = getCronString(min, MINS);
   const hourtring = getCronString(hour, HOURS);
   const dayString = getCronString(day, DAYS);
-  const monthsIndexArr = Object.keys(MONTHS).map((_, index) => index);
+  const monthsIndexArr = Object.keys(MONTHS).map(
+    (_, index) => index + MONTH_MIN
+  );
   const monthString = getCronString(month, monthsIndexArr);
   const weeksIndexArr = Object.keys(WEEKS).map((_, index) => index);
   const weekString = getCronString(week, weeksIndexArr);
