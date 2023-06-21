@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/cron-scheduler/static/css/main.2747b7f8.css",
+    "main.js": "/cron-scheduler/static/js/main.188081fd.js",
+    "index.html": "/cron-scheduler/index.html",
+    "main.2747b7f8.css.map": "/cron-scheduler/static/css/main.2747b7f8.css.map",
+    "main.188081fd.js.map": "/cron-scheduler/static/js/main.188081fd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2747b7f8.css",
+    "static/js/main.188081fd.js"
+  ]
+}
